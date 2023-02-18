@@ -18,7 +18,13 @@ public class Reader {
 
         while (true) {
             System.out.print("\nType your answer: ");
-            char answer = IN.readLine().trim().charAt(0);
+            String text = IN.readLine().trim();
+
+            char answer = ' ';
+
+            if (!text.isBlank()) {
+                answer = text.charAt(0);
+            }
 
             if (answer == '1') return true;
             else if (answer == '2') return false;
@@ -60,11 +66,15 @@ public class Reader {
                 return capitalize(username);
             }
 
-            System.out.println("\nName must contain only letters. \n");
+            System.out.println("\nName must contain only letters and not be blank. \n");
         }
     }
 
     private boolean validateEmail(String email) {
+        if (email.isBlank()) {
+            return false;
+        }
+
         int totalAts = 0;
 
         for (int i = 0; i < email.length(); i++) {
@@ -110,6 +120,10 @@ public class Reader {
     }
 
     private boolean validateUsername(String username) {
+        if (username.isBlank()) {
+            return false;
+        }
+
         for (int i = 0; i < username.length(); i++) {
             char thisChar = username.charAt(i);
 
@@ -141,8 +155,17 @@ public class Reader {
         return formattedName.toString();
     }
 
-    public String readString() throws IOException {
-        return IN.readLine().trim();
+    public String readString(String request) throws IOException {
+        while (true) {
+            System.out.print(request);
+            String text = IN.readLine().trim();
+
+            if (!text.isBlank()) {
+                return text;
+            }
+
+            System.out.println("\nValue can't be blank. \n");
+        }
     }
     
 }

@@ -14,7 +14,7 @@ public class CSV {
         this.WRITER = new FileWriter(directory + "/Vacancies.csv", true);
     }
 
-    public void generateFile(List<Vacancy> allVacancies) throws IOException {
+    public void writeFile(List<Vacancy> allVacancies) throws IOException {
         this.WRITER.write("Title, Company, Salary, Location, URL \n");
 
         for (Vacancy currentVacancy : allVacancies) {

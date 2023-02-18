@@ -22,7 +22,7 @@ public class Mail {
     private final String SENDER_NAME;
     private final String RECIPIENT_EMAIL;
     private final String FILE_DIRECTORY;
-    private final String JOB_SEEKER = "";
+    private final String JOB_SEEKER = "jobseeker.1000DEVs@gmail.com";
 
     public Mail(String senderName, String recipientEmail, String userDirectory) {
         this.SENDER_NAME = senderName;
@@ -42,9 +42,9 @@ public class Mail {
         Properties props = System.getProperties();
 
         props.put("mail.smtp.host", "smtp.gmail.com");
-	props.put("mail.smtp.port", "465");
-	props.put("mail.smtp.ssl.enable", "true");
-	props.put("mail.smtp.auth", "true");
+		props.put("mail.smtp.port", "465");
+		props.put("mail.smtp.ssl.enable", "true");
+		props.put("mail.smtp.auth", "true");
 
         return props;
     }

@@ -1,5 +1,6 @@
 package br.com.ismaelcardosojr.front;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.List;
 
@@ -43,19 +44,37 @@ public class Front {
         return userInfo;
     }
 
-    public static void waitFileGeneration(String userDirectory) throws IOException {
+    public static String waitFileWriting(String userDirectory) throws IOException, InterruptedException {
         cleanTerminal();
 
-        System.out.print("Generating file... ");
+        System.out.print("Scraping vacancies... ");
 
         Scraper scraper = new Scraper();
         List<Vacancy> allVacancies = scraper.obtainAllVacancies();
 
-        CSV writer = new CSV(userDirectory);
-        writer.generateFile(allVacancies);
+        System.out.print("\nWriting file... ");
+        Thread.sleep(2500);
 
-        System.out.print("\nFile generated successfully! (Enter to continue) ");
+        System.out.println();
+        
+        while (true) {
+            try {
+                CSV writer = new CSV(userDirectory);
+                writer.writeFile(allVacancies);
+
+                break;
+            } catch (FileNotFoundException e) {
+                System.out.print("\nDirectory wasn't valid. Let's try one more time (Enter to continue) ");
+                READER.await();
+
+                userDirectory = requestUserDirectory();
+            }
+        }
+
+        System.out.print("\nTask successfully done! (Enter to continue) ");
         READER.await();
+
+        return userDirectory;
     }
 
     public static String displayMailOption() throws IOException {
@@ -87,7 +106,7 @@ public class Front {
         Mail mail = new Mail(username, recipient, userDirectory);
         mail.sendEmail();
 
-        System.out.print("\nEmail sent successfully! (Enter to continue) ");
+        System.out.print("\nEmail successfully sent! (Enter to continue) ");
         READER.await();
     }
 
@@ -103,11 +122,11 @@ public class Front {
         System.out.println("I need a directory to save the file. May you, please, insert one? \n");
 
         System.out.println("Ex. (Windows) - C:///Users/{your username}/Documents");
-        System.out.println("Ex. (Linux) - /home/{your username}/Documents \n");
+        System.out.println("Ex. (Linux) - /home/{your username}/Documents");
 
-        System.out.print("Here: ");
+        System.out.println("\nPay attention to upper and lower case letters! All '/' matters too. \n");
 
-        return READER.readString();
+        return READER.readString("Here: ");
     }
 
     private static void cleanTerminal() {
