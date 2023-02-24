@@ -9,9 +9,9 @@ public class CathoScraping {
 
     public static void main(String[] args) throws IOException, MessagingException, InterruptedException {
         String[] userInfo = Front.displayIntro();
-
-        String userDirectory = userInfo[1];
+        
         String username = userInfo[0];
+        String userDirectory = userInfo[1];
 
         userDirectory = Front.waitFileWriting(userDirectory);
 
