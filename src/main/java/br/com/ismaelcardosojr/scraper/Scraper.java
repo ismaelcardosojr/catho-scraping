@@ -32,9 +32,9 @@ public class Scraper {
 
     private List<Vacancy> obtainPageVacancies(int pageNum) throws IOException {
         Document html = obtainHTML(pageNum);
-        Element searchResult = html.selectFirst("div.sc-dymIpo.jTJkHV h1");
+        Element withoutResult = html.selectFirst("div.sc-dymIpo.jTJkHV h1");
 
-        if (searchResult != null) {
+        if (withoutResult != null) {
             return null;
         }
 
